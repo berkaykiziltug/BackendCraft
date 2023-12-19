@@ -3,6 +3,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,12 +24,14 @@ namespace DataAccess.Concrete.InMemory
         }
         public void Add(Product product)
         {
-           _products.Add(product);
+            _products.Add(product);
         }
+
+
 
         public void Delete(Product product)
         {
-             
+
             //LINQ kodu (SingleOrDefault) listedeki tüm productIdleri dolanıyor.(p aliası ile geri gönderiyor buraya).Ve eğer p.ProductId,
             //product.ProductId ye eşitse onu productToDelete e çeviriyor
             Product productToDelete = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
@@ -36,23 +39,24 @@ namespace DataAccess.Concrete.InMemory
             _products.Remove(productToDelete);
         }
 
-        public List<Product> GetAll()
+        public Product Get(Expression<Func<Product, bool>> filter)
         {
-            return _products;
+            throw new NotImplementedException();
         }
 
-        public List<Product> GetAllByCategory(int categoryId)
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
         {
-            return _products.Where(p =>  p.CategoryId == categoryId).ToList();
+            throw new NotImplementedException();
         }
 
         public void Update(Product product)
         {
-           Product productToUpdate = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
+            Product productToUpdate = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
             productToUpdate.ProductName = product.ProductName;
             productToUpdate.CategoryId = product.CategoryId;
             productToUpdate.UnitPrice = product.UnitPrice;
             productToUpdate.UnitsInStock = product.UnitsInStock;
         }
-    }
+
+    }      
 }
